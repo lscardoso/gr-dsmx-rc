@@ -49,8 +49,8 @@ namespace gr {
       d_not_Found = 0;
       preambleDetection_impl::set_new_channel(channel);
       d_samples_processed = 2000;
-      message_port_register_out(PDU_PORT_ID);
-      d_type = gr::blocks::pdu::byte_t;
+      message_port_register_out(pmt::mp("pdus"));
+      d_type = gr::types::byte_t;
       d_pdu_meta = pmt::PMT_NIL;
       d_pdu_vector = pmt::PMT_NIL;
       d_state = 0;
@@ -159,7 +159,7 @@ namespace gr {
               if((d_samples_processed - d_offset == d_nbr_samples_to_process-1)) {
 
                 // Grab data, throw into vector
-                d_pdu_vector = gr::blocks::pdu::make_pdu_vector(d_type, d_dataBuffer, (1+16+2)*8);
+                d_pdu_vector = gr::pdu::make_pdu_vector(d_type, d_dataBuffer, (1+16+2)*8);
                 d_pdu_meta = pmt::make_dict();
                 d_pdu_meta = dict_add(d_pdu_meta, pmt::intern("Column"), pmt::mp(d_column));
                 d_pdu_meta = dict_add(d_pdu_meta, pmt::intern("Row"), pmt::mp(d_row));
@@ -167,7 +167,7 @@ namespace gr {
 
                 // Send msg
                 pmt::pmt_t msg = pmt::cons(d_pdu_meta, d_pdu_vector);
-                message_port_pub(PDU_PORT_ID, msg);
+                message_port_pub(pmt::mp("pdus"), msg);
 
               }
               break;

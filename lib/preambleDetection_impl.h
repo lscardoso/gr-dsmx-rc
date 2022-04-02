@@ -22,8 +22,8 @@
 #define INCLUDED_DSMX_PREAMBLEDETECTION_IMPL_H
 
 
-#include <gnuradio/blocks/pdu.h>
-#include <dsmx/preambleDetection.h>
+#include <gnuradio/pdu.h>
+#include <gnuradio/dsmx/preambleDetection.h>
 
 namespace gr {
   namespace dsmx {
@@ -43,7 +43,7 @@ namespace gr {
       uint8_t d_dataBuffer[(1+16 + 2)*8];
       pmt::pmt_t d_pdu_meta;
       pmt::pmt_t d_pdu_vector;
-      gr::blocks::pdu::vector_type d_type;
+      gr::types::vector_type d_type;
       uint8_t sopRecieved[8];
       int d_state;
       int d_offset;

@@ -275,9 +275,9 @@ namespace gr {
           sprintf(string, "%d %d", (d_data_chunks[i]>>15), ((d_data_chunks[i]>>11) & 0xF));
           d_pdu_meta = dict_add(d_pdu_meta, pmt::intern(string), pmt::mp(d_data_chunks[i] & 0x7FF));
         }
-        d_pdu_vector = gr::blocks::pdu::make_pdu_vector(d_type, d_channels, 23);
+        d_pdu_vector = gr::pdu::make_pdu_vector(d_type, d_channels, 23);
         pmt::pmt_t msg = pmt::cons(d_pdu_meta, d_pdu_vector);
-        message_port_pub(PDU_PORT_ID, msg);
+        message_port_pub(pmt::mp("pdus"), msg);
         std::cout << std::endl;
       }
 
@@ -541,10 +541,10 @@ namespace gr {
                  io_signature::make(0, 0, 0))
     {
       message_port_register_in(pmt::mp("Msg"));
-      set_msg_handler(pmt::mp("Msg"), boost::bind(&Despreader_impl::callback, this, _1));
+      set_msg_handler(pmt::mp("Msg"), [this](pmt::pmt_t msg) { this->callback(msg); });
       crc_tab16_init = false;
-      message_port_register_out(PDU_PORT_ID);
-      d_type = gr::blocks::pdu::byte_t;
+      message_port_register_out(pmt::mp("pdus"));
+      d_type = gr::types::byte_t;
       d_pdu_meta = pmt::PMT_NIL;
       d_pdu_vector = pmt::PMT_NIL;
     }

@@ -22,8 +22,8 @@
 #define INCLUDED_DSMX_DESPREADER_IMPL_H
 
 #include <stdio.h>
-#include <gnuradio/blocks/pdu.h>
-#include <dsmx/Despreader.h>
+#include <gnuradio/pdu.h>
+#include <gnuradio/dsmx/Despreader.h>
 
 namespace gr {
   namespace dsmx {
@@ -47,7 +47,7 @@ namespace gr {
       int d_channel;
       pmt::pmt_t d_pdu_meta;
       pmt::pmt_t d_pdu_vector;
-      gr::blocks::pdu::vector_type d_type;
+      gr::types::vector_type d_type;
       uint8_t d_channels[23];
       uint16_t d_data_chunks[8], d_crc_recieved;
       uint16_t d_high_reminder, d_reminder;
