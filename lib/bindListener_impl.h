@@ -24,7 +24,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "Despreader_impl.h"
-#include <dsmx/bindListener.h>
+#include <gnuradio/dsmx/bindListener.h>
 
 namespace gr {
   namespace dsmx {
